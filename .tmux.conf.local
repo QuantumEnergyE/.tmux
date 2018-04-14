@@ -269,6 +269,7 @@ tmux_conf_copy_to_os_clipboard=false
 # customize
 # 支持鼠标
 # set-option -g mouse on
+set-option -g prefix2 ` # 设置一个不常用的`键作为指令前缀
 unbind '"'
 bind - splitw -v -c '#{pane_current_path}' # 垂直方向新增面板，默认进入当前目录
 unbind %
