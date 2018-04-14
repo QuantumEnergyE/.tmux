@@ -223,9 +223,9 @@ tmux_conf_battery_vbar_palette='gradient'
 # symbols used to indicate whether battery is charging or discharging
 tmux_conf_battery_status_charging='↑'       # U+2191
 tmux_conf_battery_status_discharging='↓'    # U+2193
-#tmux_conf_battery_status_charging='⚡ '    # U+26A1
-#tmux_conf_battery_status_charging='🔌 '    # U+1F50C
-#tmux_conf_battery_status_discharging='🔋 ' # U+1F50B
+tmux_conf_battery_status_charging='⚡ '    # U+26A1
+tmux_conf_battery_status_charging='🔌 '    # U+1F50C
+tmux_conf_battery_status_discharging='🔋 ' # U+1F50B
 
 # clock style
 tmux_conf_theme_clock_colour='#00afff'  # light blue
@@ -265,3 +265,26 @@ tmux_conf_copy_to_os_clipboard=false
 
 # move status line to top
 #set -g status-position top
+
+# customize
+# 支持鼠标
+# set-option -g mouse on
+unbind '"'
+bind - splitw -v -c '#{pane_current_path}' # 垂直方向新增面板，默认进入当前目录
+unbind %
+bind | splitw -h -c '#{pane_current_path}' # 水平方向新增面板，默认进入当前目录
+# 绑定hjkl键为面板切换的上下左右键
+bind -r k select-pane -U # 绑定k为↑
+bind -r j select-pane -D # 绑定j为↓
+bind -r h select-pane -L # 绑定h为←
+bind -r l select-pane -R # 绑定l为→
+# 绑定Ctrl+hjkl键为面板上下左右调整边缘的快捷指令
+bind -r ^k resizep -U 10 # 绑定Ctrl+k为往↑调整面板边缘10个单元格
+bind -r ^j resizep -D 10 # 绑定Ctrl+j为往↓调整面板边缘10个单元格
+bind -r ^h resizep -L 10 # 绑定Ctrl+h为往←调整面板边缘10个单元格
+bind -r ^l resizep -R 10 # 绑定Ctrl+l为往→调整面板边缘10个单元格
+setw -g mode-keys vi # 开启vi风格后，支持vi的C-d、C-u、hjkl等快捷键
+bind Escape copy-mode # 绑定esc键为进入复制模式
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+bind p pasteb # 绑定p键为粘贴文本（p键默认用于进入上一个窗口，不建议覆盖）
